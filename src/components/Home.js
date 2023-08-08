@@ -4,7 +4,7 @@ import BookShelf from "./BookShelf";
 import { Link } from "react-router-dom";
 
 
-function Home({ books, allShelfs, changeShelf}) {
+function Home({ books, allShelfs, onUpdateShelf}) {
 
   return (
         <div className="list-books">
@@ -19,7 +19,7 @@ function Home({ books, allShelfs, changeShelf}) {
                   books={books.filter((book) => book.shelf === shelfCode)}
                   allShelfs={allShelfs}
                   shelf={allShelfs[shelfCode]}
-                  changeShelf={changeShelf}
+                  onUpdateShelf={onUpdateShelf}
                 />
               ))}
             </div>

@@ -1,6 +1,6 @@
 import Book from "./Book";
-
-function BookShelf({ changeShelf, allShelfs, shelf, books }) {
+import { PropTypes } from "prop-types"
+function BookShelf({ onUpdateShelf, allShelfs, shelf, books }) {
 
 
   return (
@@ -12,7 +12,7 @@ function BookShelf({ changeShelf, allShelfs, shelf, books }) {
             <Book
                 key={"bookShelf__" + book.title + "_book" + book.shelf + "_shelf"}
                 book={book}
-                changeShelf={changeShelf}
+                onUpdateShelf={onUpdateShelf}
                 allShelfs={allShelfs}
               />
           ))}
@@ -20,6 +20,13 @@ function BookShelf({ changeShelf, allShelfs, shelf, books }) {
       </div>
     </div>
   );
+}
+
+BookShelf.propTypes = {
+  books: PropTypes.array.isRequired,
+  allShelfs: PropTypes.object.isRequired,
+  shelf: PropTypes.string.isRequired,
+  onUpdateShelf: PropTypes.func.isRequired,
 }
 
 export default BookShelf;

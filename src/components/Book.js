@@ -1,4 +1,6 @@
-function Book({book, allShelfs, changeShelf}) {
+import { PropTypes } from 'prop-types';
+
+function Book({book, allShelfs, onUpdateShelf}) {
 
     let thumbnail = "";
     let authors = "";
@@ -27,7 +29,7 @@ function Book({book, allShelfs, changeShelf}) {
             <div className="book-shelf-changer">
               <select
                 defaultValue={book.shelf}
-                onChange={(e) => changeShelf(book.id, e.target.value)}
+                onChange={(e) => onUpdateShelf(book, e.target.value)}
               >
                 <option disabled>
                   {" "}
@@ -49,6 +51,12 @@ function Book({book, allShelfs, changeShelf}) {
         </div>
       </li>
     );
+}
+
+Book.propTypes = {
+  book: PropTypes.object.isRequired,
+  allShelfs: PropTypes.object.isRequired,
+  onUpdateShelf: PropTypes.func.isRequired,
 }
 
 export default Book;
