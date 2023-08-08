@@ -1,3 +1,12 @@
+# Warning For The reviewers
+the Api of the books doesn't send back any books you marked as None (or any book that have shelf name not equal to any of the main 3 shelfs)
+(you can test it, by displaying the books immediately after calling getAll fetch request (in App.js -> start from line 32))
+thanks :).
+
+# App Description
+This Project is a book tracking App, where you can track all books you want to read
+and categories them in 3 main shelfs. It also allowed you to search for new books and add them to your shelfs.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
