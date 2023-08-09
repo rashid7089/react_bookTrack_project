@@ -8,38 +8,40 @@ function SearchPage({ books, allShelfs, onUpdateShelf}) {
 
     const [displayedBooks, setdisplayedBooks] = useState(books);
     const [searchTerm, setsearchTerm] = useState("");
-
+    const [abortController, setabortController] = useState(new AbortController());
     useEffect(() => {
-        if (!searchTerm) searchBooks(searchTerm); // update displayedBooks to books, when ever books updated
+      searchBooks(searchTerm); // update displayedBooks to books, when ever books updated
+
+      return () => {
+        abortController.abort(); // abort the previous search
+      }
     }, [books]);
     
 
     const searchBooks = (newSearchTerm) => {
+        // abort the previous search (if the user is typing very fast, we don't need the previous search results)
+        abortController.abort(); 
+        // --------------------------------
+
         setsearchTerm(newSearchTerm); // update the feild 
-        if (newSearchTerm.trim() === "") setdisplayedBooks(books);
+        if (newSearchTerm === "") setdisplayedBooks(books);
         else {
-          // const newB = books.filter(
-          //   (book) => {
-          //       let titleCheck = book.title && book.title.toLowerCase().includes(newSearchTerm.toLowerCase());
-          //       let authorsCheck = book.authors && book.authors.filter((a) =>
-          //           a.toLowerCase().includes(newSearchTerm.toLowerCase())
-          //         ).length > 0;
-          //       let ISBNCheck =book.industryIdentifiers && book.industryIdentifiers.filter((a) =>
-          //           a.identifier
-          //             .toLowerCase()
-          //             .includes(newSearchTerm.toLowerCase())
-          //         ).length > 0;
-          //       return titleCheck || authorsCheck || ISBNCheck;
-          //   }
-          // );
-          searchResults(newSearchTerm, 10).then((books) => {
-            if (books.error) setdisplayedBooks([]);
-            else setdisplayedBooks(books.map((book) => {
-              // if book shelf is not from the main 3 make it none by defualt
-              if (!Object.keys(allShelfs).includes(book.shelf)) book.shelf = "none";
-              return book;
-            }));
-          });
+            const newAbortController = new AbortController(); // create a new abort control
+            setabortController(newAbortController); // update the abort controller
+            
+            // search for the new term
+            searchResults(newSearchTerm, 10, newAbortController.signal).then((newB) => {
+              if (newB.error) setdisplayedBooks([]);
+              else {
+                newB.forEach((book) => {
+                  // update the shelf of the book
+                  const foundBook = books.find((b) => b.id === book.id);
+                  if (foundBook) book.shelf = foundBook.shelf;
+                  else book.shelf = "none";
+                });
+                setdisplayedBooks(newB);
+              }
+          }).catch((error) => {}); // if the user abort the search, don't update the state
         }
     };
 

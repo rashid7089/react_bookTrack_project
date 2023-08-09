@@ -30,9 +30,10 @@ export const update = (book, shelf) =>
     body: JSON.stringify({ shelf }),
   }).then((res) => res.json());
 
-export const search = (query, maxResults) =>
+export const search = (query, maxResults, abortToken) =>
   fetch(`${api}/search`, {
     method: "POST",
+    signal: abortToken,
     headers: {
       ...headers,
       "Content-Type": "application/json",
