@@ -9,6 +9,7 @@ function SearchPage({ books, allShelfs, onUpdateShelf}) {
     const [displayedBooks, setdisplayedBooks] = useState(books);
     const [searchTerm, setsearchTerm] = useState("");
     const [abortController, setabortController] = useState(new AbortController());
+    
     useEffect(() => {
       searchBooks(searchTerm); // update displayedBooks to books, when ever books updated
 

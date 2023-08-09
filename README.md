@@ -1,6 +1,6 @@
 # App Description
 This Project is a book tracking App, where you can track all books you want to read
-and categories them in 3 main shelfs (want to read, read, currently reading). It also allowed you to search for new books and add them to your shelfs.
+and categories them in 3 main shelfs (want to read, read, currently reading). It also allow you to search for new books and add them to your shelfs.
 
 # How to start
 1. clone or download the project on your machine

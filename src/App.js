@@ -49,8 +49,6 @@ function App() {
   const GetAllBooks = () => {
     getAll()
       .then((allBooks) => {
-        // console.log(allBooks); 
-        // there is a problem in the api, please read readme line 1
         allBooks = allBooks.map((book) => {
           // if book shelf is not from the main 3 make it none by defualt
           if (!Object.keys(allShelfs).includes(book.shelf)) book.shelf = "none";
