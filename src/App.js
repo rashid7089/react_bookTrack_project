@@ -23,15 +23,21 @@ function App() {
     // update the book shelf in the state
     let newBooks = books.map(book => {
       if (book.id === selectedBook.id) {
-        foundTheBook = true;
+        foundTheBook = true;        
         updateBookInDatabase(book, newShelf); // update the book in the database
         return {...book, shelf:newShelf}; // update the book in the state
       }
       return book;
     })
+    // --------------------------------
+    
+
+
+    // if the book new shelf is none, remove it from the state
+    if (foundTheBook && newShelf === "none") return setbooks(newBooks.filter(book => book.id !== selectedBook.id)); 
 
     // if book wasn't existed in the state before, add it
-    if (!foundTheBook) { 
+    else if (!foundTheBook) { 
       selectedBook.shelf = newShelf;
       newBooks.push(selectedBook);
       updateBookInDatabase(selectedBook, newShelf); // update the book in the database
